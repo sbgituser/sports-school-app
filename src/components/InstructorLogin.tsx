@@ -12,10 +12,11 @@ const InstructorLogin: React.FC<Props> = ({ setIsAuthenticated }) => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('ログイン処理開始');
     const dummyToken = 'dummy-token';
     localStorage.setItem('token', dummyToken);
     setIsAuthenticated(true);
-    navigate('/');
+    navigate('/students');  // ← ここで直接遷移
   };
 
   return (
