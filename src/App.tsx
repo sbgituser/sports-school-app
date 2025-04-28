@@ -1,8 +1,7 @@
-import React from 'react';
-import InstructorDashboard from './InstructorDashboard';
+import InstructorLogin from "./components/InstructorLogin";
 
 function App() {
-  return <InstructorDashboard />;
+  return <InstructorLogin />;
 }
 
 export default App;
