@@ -11,8 +11,8 @@ const Header: React.FC<HeaderProps> = ({ title, setIsAuthenticated }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setIsAuthenticated(false);  // ここで認証状態を更新
-    navigate('/login');  // React Routerで遷移
+    setIsAuthenticated(false);
+    navigate('/login');
   };
 
   return (
@@ -27,5 +27,4 @@ const Header: React.FC<HeaderProps> = ({ title, setIsAuthenticated }) => {
     </header>
   );
 };
-
 export default Header;

@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import InstructorLogin from './components/InstructorLogin';
 import StudentList from './pages/StudentList';
 import PlaceholderPage from './pages/PlaceholderPage';
-import StudentInfo from './pages/StudentInfo';  // 新規追加
+import StudentInfo from './pages/StudentInfo';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 const AppContent: React.FC<{ isAuthenticated: boolean; setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>> }> = ({ isAuthenticated, setIsAuthenticated }) => {
   const location = useLocation();
-  const showHeader = location.pathname !== '/login';
+  const showHeaderFooter = location.pathname !== '/login';
 
   const getTitle = () => {
     switch (location.pathname) {
@@ -20,62 +21,67 @@ const AppContent: React.FC<{ isAuthenticated: boolean; setIsAuthenticated: React
         return '項目一覧';
       case '/notices':
         return 'お知らせ一覧';
+      case '/student-info':
+        return '講習生情報';
       default:
         return '';
     }
   };
 
   return (
-    <>
-      {showHeader && (
+    <div className="flex flex-col h-screen">
+      {showHeaderFooter && (
         <Header
           title={getTitle()}
           setIsAuthenticated={setIsAuthenticated}
         />
       )}
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            isAuthenticated ? <Navigate to="/students" replace /> : <InstructorLogin setIsAuthenticated={setIsAuthenticated} />
-          }
-        />
-        <Route
-          path="/students"
-          element={
-            isAuthenticated ? <StudentList /> : <Navigate to="/login" replace />
-          }
-        />
-        <Route
-          path="/student-info"
-          element={
-            isAuthenticated ? <StudentInfo /> : <Navigate to="/login" replace />
-          }
-        />
-        <Route
-          path="/classes"
-          element={
-            isAuthenticated ? <PlaceholderPage title="クラス一覧" /> : <Navigate to="/login" replace />
-          }
-        />
-        <Route
-          path="/items"
-          element={
-            isAuthenticated ? <PlaceholderPage title="項目一覧" /> : <Navigate to="/login" replace />
-          }
-        />
-        <Route
-          path="/notices"
-          element={
-            isAuthenticated ? <PlaceholderPage title="お知らせ一覧" /> : <Navigate to="/login" replace />
-          }
-        />
-        <Route
-          path="/"
-          element={<Navigate to={isAuthenticated ? "/students" : "/login"} replace />}
-        />
-      </Routes>
-    </>
+      <div className="flex-1 overflow-y-auto">
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              isAuthenticated ? <Navigate to="/students" replace /> : <InstructorLogin setIsAuthenticated={setIsAuthenticated} />
+            }
+          />
+          <Route
+            path="/students"
+            element={
+              isAuthenticated ? <StudentList /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/student-info"
+            element={
+              isAuthenticated ? <StudentInfo /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/classes"
+            element={
+              isAuthenticated ? <PlaceholderPage title="クラス一覧" /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/items"
+            element={
+              isAuthenticated ? <PlaceholderPage title="項目一覧" /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/notices"
+            element={
+              isAuthenticated ? <PlaceholderPage title="お知らせ一覧" /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/"
+            element={<Navigate to={isAuthenticated ? "/students" : "/login"} replace />}
+          />
+        </Routes>
+      </div>
+      {showHeaderFooter && <Footer />}
+    </div>
   );
 };
 
